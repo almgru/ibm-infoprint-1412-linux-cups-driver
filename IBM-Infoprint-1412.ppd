@@ -1,0 +1,1112 @@
+*PPD-Adobe: "4.3"
+
+*%******************************************************************************
+*%	Adobe PostScript(R) Printer Description File
+*%	For IBM Infoprint 1412 LaserPrinter
+*%	Produced by Lexmark International, Inc.
+*%
+*%	Copyright (c) 2004 Lexmark International Inc.  All Rights Reserved.
+*%	Permission is granted for redistribution of this file as
+*%	long as this copyright notice is intact and the content 
+*%	of the file is not altered in any way from its original form.
+*%
+*%******************************************************************************
+
+*%******************************************************************************
+*%	General Information
+*%******************************************************************************
+
+*FormatVersion:		"4.3"
+*FileVersion:		"1.0.2"
+*LanguageVersion:	English
+*LanguageEncoding:	MacStandard
+*PCFileName:		"IBMI1412.PPD"
+
+*LexmarkPDEID:		"Lexmark"
+*Product:			"(IBM Infoprint 1412)"
+*PSVersion:			"(3010.010) 20020903"
+*Manufacturer:		"IBM"
+*ModelName:			"IBM Infoprint 1412"
+*ShortNickName:		"IBM Infoprint 1412"
+*NickName:			"IBM Infoprint 1412"
+
+*%*****************************************************************************
+*%	CUPS compatibility - Filter
+*%*****************************************************************************
+*cupsFilter:	"application/vnd.cups-postscript 100 foomatic-rip"
+*cupsFilter:	"application/vnd.cups-pdf 0 foomatic-rip"
+
+*%*****************************************************************************
+*%	Basic Capabilities
+*%*****************************************************************************
+
+*LanguageLevel:		"3"
+*Throughput:		"27"
+*ColorDevice:		False
+*DefaultColorSpace:	Gray
+*TTRasterizer:		Type42
+*?TTRasterizer:		""
+*FileSystem:		True
+*?FileSystem:		""
+
+*%	*DeviceAdjustMatrix: " 1 0 0 1 0 0 "
+
+*Protocols: TBCP
+
+*Password: "0"
+*ExitServer: "
+	count 0 eq   % is the password on the stack?
+	{ true }
+	{ dup        % potential password
+		statusdict /checkpassword get exec not
+	} ifelse
+	{  %  if no password or not valid
+		(WARNING : Cannot perform the exitserver command.) =
+		(Password supplied is not valid.) =
+		(Please contact the author of this software.) = flush
+		quit
+	} if
+	serverdict /exitserver get exec"
+*End
+*Reset: "
+	count 0 eq  % is the password on the stack?
+	{ true }
+	{ dup      % potential password
+		statusdict /checkpassword get exec not
+	} ifelse
+	{  %  if no password or not valid
+		(WARNING : Cannot reset printer.) =
+		(Password supplied is not valid.) =
+		(Please contact the author of this software.) = flush
+		quit
+	} if
+	serverdict /exitserver get exec
+	systemdict /quit get exec
+	(WARNING : Printer Reset Failed.) = flush"
+*End
+
+*% Do Not Delete the Next Line
+*JobPatchFile 1: "%%Lexmark Macintosh PPD File 1"
+
+*%******************************************************************************
+*%	Installable Options
+*%******************************************************************************
+
+*OpenGroup: InstallableOptions/Options Installed
+
+*OpenUI *Flash/Flash: PickOne
+*DefaultFlash: InstalledF
+*Flash NotInstalledF/Not Installed:	""
+*Flash InstalledF/Installed:			""
+*?Flash:							"
+	gsave
+	(%flash%) devstatus
+	{(InstalledF)}{(NotInstalledF)} ifelse
+	= flush
+	grestore"
+*End
+*CloseUI:	*Flash
+
+*OpenUI *InputSources/Input Sources: PickOne
+*DefaultInputSources: Tray12
+*InputSources Tray1/Tray 1:						""
+*InputSources Tray12/Tray 1+2:					""
+*?InputSources:									"
+	currentpagedevice /InputAttributes get
+	1 get null eq {(Tray1)} {(Tray12)} ifelse
+	= flush"
+*End
+*CloseUI:	*InputSources
+
+*OpenUI *InstalledMemory/Printer Memory: PickOne
+*DefaultInstalledMemory: 160Meg
+*InstalledMemory 32Meg/32 MB Memory:	""
+*InstalledMemory 40Meg/40 MB Memory:	""
+*InstalledMemory 48Meg/48 MB Memory:	""
+*InstalledMemory 64Meg/64 MB Memory:	""
+*InstalledMemory 96Meg/96 MB Memory:	""
+*InstalledMemory 160Meg/160 MB Memory:	""
+*?InstalledMemory:						"
+	gsave
+	currentsystemparams /InstalledRam get 
+	1048576 div cvi 6 string cvs dup length dup 3 add string dup 3 index 0 exch putinterval dup
+	2 index (Meg) putinterval exch pop exch pop = flush
+	grestore"
+*End
+*CloseUI: *InstalledMemory
+
+*CloseGroup: InstallableOptions
+
+*%******************************************************************************
+*%	Constraints
+*%******************************************************************************
+
+*UIConstraints:	*InputSources Tray1 		*SepSource Tray2
+*UIConstraints:	*InputSources Tray1 		*InputSlot Tray2
+
+*UIConstraints: *SepPages None 				*SepSource Tray1
+*UIConstraints: *SepPages None 				*SepSource Tray2
+
+*UIConstraints:	*InputSlot Tray1			*PageSize Monarch
+*UIConstraints:	*InputSlot Tray1			*PageSize C4
+*UIConstraints:	*InputSlot Tray1			*PageSize Comm10
+*UIConstraints:	*InputSlot Tray1			*PageSize DL
+*UIConstraints:	*InputSlot Tray1			*PageSize C5
+*UIConstraints:	*InputSlot Tray1			*PageSize ISOB5
+*UIConstraints:	*InputSlot Tray1			*PageSize OthEnv
+*UIConstraints:	*InputSlot Tray2			*PageSize Monarch
+*UIConstraints:	*InputSlot Tray2			*PageSize C4
+*UIConstraints:	*InputSlot Tray2			*PageSize Comm10
+*UIConstraints:	*InputSlot Tray2			*PageSize DL
+*UIConstraints:	*InputSlot Tray2			*PageSize C5
+*UIConstraints:	*InputSlot Tray2			*PageSize ISOB5
+*UIConstraints:	*InputSlot Tray2			*PageSize OthEnv
+*UIConstraints:	*InputSlot ManualPaper		*PageSize Monarch
+*UIConstraints:	*InputSlot ManualPaper		*PageSize C4
+*UIConstraints:	*InputSlot ManualPaper		*PageSize Comm10
+*UIConstraints:	*InputSlot ManualPaper		*PageSize DL
+*UIConstraints:	*InputSlot ManualPaper		*PageSize C5
+*UIConstraints:	*InputSlot ManualPaper		*PageSize ISOB5
+*UIConstraints:	*InputSlot ManualPaper		*PageSize OthEnv
+*UIConstraints:	*InputSlot ManualEnv		*PageSize Letter
+*UIConstraints:	*InputSlot ManualEnv		*PageSize Legal
+*UIConstraints:	*InputSlot ManualEnv		*PageSize A4
+*UIConstraints:	*InputSlot ManualEnv		*PageSize B5
+*UIConstraints:	*InputSlot ManualEnv		*PageSize Executive
+*UIConstraints:	*InputSlot ManualEnv		*PageSize A5
+*UIConstraints:	*InputSlot ManualEnv		*PageSize Folio
+*UIConstraints:	*InputSlot ManualEnv		*PageSize Statement
+*UIConstraints:	*InputSlot ManualEnv		*PageSize Universal
+
+*UIConstraints:	*InputSlot Tray1			*PageRegion Monarch
+*UIConstraints:	*InputSlot Tray1			*PageRegion C4
+*UIConstraints:	*InputSlot Tray1			*PageRegion Comm10
+*UIConstraints:	*InputSlot Tray1			*PageRegion DL
+*UIConstraints:	*InputSlot Tray1			*PageRegion C5
+*UIConstraints:	*InputSlot Tray1			*PageRegion ISOB5
+*UIConstraints:	*InputSlot Tray1			*PageRegion OthEnv
+*UIConstraints:	*InputSlot Tray2			*PageRegion Monarch
+*UIConstraints:	*InputSlot Tray2			*PageRegion C4
+*UIConstraints:	*InputSlot Tray2			*PageRegion Comm10
+*UIConstraints:	*InputSlot Tray2			*PageRegion DL
+*UIConstraints:	*InputSlot Tray2			*PageRegion C5
+*UIConstraints:	*InputSlot Tray2			*PageRegion ISOB5
+*UIConstraints:	*InputSlot Tray2			*PageRegion OthEnv
+*UIConstraints:	*InputSlot ManualPaper		*PageRegion Monarch
+*UIConstraints:	*InputSlot ManualPaper		*PageRegion C4
+*UIConstraints:	*InputSlot ManualPaper		*PageRegion Comm10
+*UIConstraints:	*InputSlot ManualPaper		*PageRegion DL
+*UIConstraints:	*InputSlot ManualPaper		*PageRegion C5
+*UIConstraints:	*InputSlot ManualPaper		*PageRegion ISOB5
+*UIConstraints:	*InputSlot ManualPaper		*PageRegion OthEnv
+*UIConstraints:	*InputSlot ManualEnv		*PageRegion Letter
+*UIConstraints:	*InputSlot ManualEnv		*PageRegion Legal
+*UIConstraints:	*InputSlot ManualEnv		*PageRegion A4
+*UIConstraints:	*InputSlot ManualEnv		*PageRegion B5
+*UIConstraints:	*InputSlot ManualEnv		*PageRegion Executive
+*UIConstraints:	*InputSlot ManualEnv		*PageRegion A5
+*UIConstraints:	*InputSlot ManualEnv		*PageRegion Folio
+*UIConstraints:	*InputSlot ManualEnv		*PageRegion Statement
+*UIConstraints:	*InputSlot ManualEnv		*PageRegion Universal
+
+*%******************************************************************************
+*%	Configurable Job Options
+*%******************************************************************************
+
+*%******************************************************************************
+*%	Imaging Group
+*%******************************************************************************
+
+*OpenGroup: Imaging/Imaging
+
+*%******************************************************************************
+*%	Resolution
+*%******************************************************************************
+
+*OpenUI *Resolution/Print Resolution: PickOne
+*DefaultResolution: PrinterS
+*OrderDependency: 10 AnySetup *Resolution
+*Resolution PrinterS/Printer Setting:	""
+*Resolution 600dpi/600 dpi:				"
+    1 dict dup /HWResolution [600 600] put setpagedevice
+	<< /DeviceRenderingInfo << /Type 98 /ImageEnhancement 0 >> >> setpagedevice
+    << /DeviceRenderingInfo << /Type 98 /ImageEnhancementType 2 >> >> setpagedevice"
+*End
+*Resolution 1200ImgQuality/1200 Image Quality:	"
+	1 dict dup /HWResolution [600 600] put setpagedevice
+	<< /DeviceRenderingInfo << /Type 98 /ImageEnhancement 1 >> >> setpagedevice
+    << /DeviceRenderingInfo << /Type 98 /ImageEnhancementType 2 >> >> setpagedevice"
+*End
+*Resolution 2400IQ/2400 Image Quality:	"
+	1 dict dup /HWResolution [600 600] put setpagedevice
+	<< /DeviceRenderingInfo << /Type 98 /ImageEnhancement 1 >> >> setpagedevice
+    << /DeviceRenderingInfo << /Type 98 /ImageEnhancementType 4 >> >> setpagedevice"
+*End
+*Resolution 1200dpi/1200 dpi:				"
+    1 dict dup /HWResolution [1200 1200] put setpagedevice
+	<< /DeviceRenderingInfo << /Type 98 /ImageEnhancement 0 >> >> setpagedevice
+    << /DeviceRenderingInfo << /Type 98 /ImageEnhancementType 2 >> >> setpagedevice"
+*End
+*?Resolution: "
+	gsave
+    currentpagedevice /DeviceRenderingInfo get /Screening get dup
+    (IET) eq exch (IETPictureGrade) eq xor		% if either IET or IETPictureGrade was returned
+    {
+      currentpagedevice /DeviceRenderingInfo get /ImageEnhancementType get
+      4 eq 
+      { (2400IQ)     }
+      {	(1200ImgQuality) }ifelse
+    }
+    { 
+      currentpagedevice /HWResolution get 0 get
+      cvi 7 string cvs dup length dup 3 add string dup 3 index 0 exch putinterval dup
+	  2 index (dpi) putinterval exch pop exch pop 
+    }
+	ifelse
+	= flush
+    grestore"
+*End
+*CloseUI: *Resolution
+
+*%******************************************************************************
+*%	Toner Darkness
+*%******************************************************************************
+
+*OpenUI *TonerDarkness/Toner Darkness: PickOne
+*OrderDependency: 16 AnySetup *TonerDarkness
+*DefaultTonerDarkness:	PrinterS
+*TonerDarkness PrinterS/Printer Setting:		""
+*TonerDarkness 1/1:		"
+	<< /DeviceRenderingInfo << /Type 98 /PrintDarkness 1 /TonerSaver true >> >> setpagedevice"
+*End
+*TonerDarkness 2/2:		"
+	<< /DeviceRenderingInfo << /Type 98 /PrintDarkness 2 /TonerSaver true >> >> setpagedevice"
+*End
+*TonerDarkness 3/3:		"
+	<< /DeviceRenderingInfo << /Type 98 /PrintDarkness 3 /TonerSaver true >> >> setpagedevice"
+*End
+*TonerDarkness 4/4:		"
+	<< /DeviceRenderingInfo << /Type 98 /PrintDarkness 4 /TonerSaver true >> >> setpagedevice"
+*End
+*TonerDarkness 5/5:		"
+	<< /DeviceRenderingInfo << /Type 98 /PrintDarkness 5 /TonerSaver true >> >> setpagedevice"
+*End
+*TonerDarkness 6/6:		"
+	<< /DeviceRenderingInfo << /Type 98 /PrintDarkness 1 /TonerSaver false >> >> setpagedevice"
+*End
+*TonerDarkness 7/7:		"
+	<< /DeviceRenderingInfo << /Type 98 /PrintDarkness 2 /TonerSaver false >> >> setpagedevice"
+*End
+*TonerDarkness 8/8:		"
+	<< /DeviceRenderingInfo << /Type 98 /PrintDarkness 3 /TonerSaver false >> >> setpagedevice"
+*End
+*TonerDarkness 9/9:		"
+	<< /DeviceRenderingInfo << /Type 98 /PrintDarkness 4 /TonerSaver false >> >> setpagedevice"
+*End
+*TonerDarkness 10/10:	"
+	<< /DeviceRenderingInfo << /Type 98 /PrintDarkness 5 /TonerSaver false >> >> setpagedevice"
+*End
+*?TonerDarkness:		"
+	gsave
+	currentpagedevice /DeviceRenderingInfo get dup /TonerSaver get
+	true eq {/PrintDarkness get}{/PrintDarkness get 5 add} ifelse
+	= flush
+	grestore"
+*End
+*CloseUI: *TonerDarkness
+
+*%******************************************************************************
+*%	Toner Saver
+*%******************************************************************************
+
+*OpenUI *TonerSaver/Toner Saver:	Boolean
+*DefaultTonerSaver: FalseM
+*OrderDependency: 20 AnySetup *TonerSaver
+*TonerSaver FalseM/Off: 	"<< /DeviceRenderingInfo << /Type 98 /TonerSaver /False >> >> setpagedevice"
+*TonerSaver TrueM/On: 	"<< /DeviceRenderingInfo << /Type 98 /TonerSaver /True >> >> setpagedevice"
+*?TonerSaver:			"
+	gsave
+	currentpagedevice /DeviceRenderingInfo get /TonerSaver get
+	true eq {(TrueM)}{(FalseM)} ifelse
+	= flush
+	grestore"
+*End
+*CloseUI: *TonerSaver
+
+*%******************************************************************************
+*%	PictureGrade
+*%******************************************************************************
+
+*OpenUI *PictureGrade/PictureGrade:	Boolean
+*OrderDependency: 15 AnySetup *PictureGrade
+*DefaultPictureGrade: FalseM
+*PictureGrade FalseM/Off:	"<< /DeviceRenderingInfo << /Type 98 /PictureGrade 0 >> >> setpagedevice"
+*PictureGrade TrueM/On:		"<< /DeviceRenderingInfo << /Type 98 /PictureGrade 1 >> >> setpagedevice"
+*?PictureGrade:				"
+	gsave
+	currentpagedevice /DeviceRenderingInfo get /Screening get dup
+	(PictureGrade) eq exch (IETPictureGrade) eq xor	% if either PictureGrade or IETPicturegrade is returned
+    {(TrueM)}{(FalseM)} ifelse
+	= flush
+	grestore"
+*End
+*CloseUI: *PictureGrade
+
+*CloseGroup: Imaging
+
+*%******************************************************************************
+*%	Halftone Definitions
+*%******************************************************************************
+
+*ScreenFreq:	"106.0"
+*ScreenAngle:	"45.0"
+*ResScreenFreq:  600dpi:		"106.0"
+*ResScreenAngle: 600dpi:		"45.0"
+
+*DefaultScreenProc:		Dot
+*ScreenProc Dot:		"{dup mul exch dup mul add 1.0 exch sub }"
+*ScreenProc Line:		"{ pop }"
+*ScreenProc Ellipse:	"{ dup 5 mul 8 div mul exch dup mul exch add sqrt 1 exch sub }"
+
+*%******************************************************************************
+*%	Paper Handling Group
+*%******************************************************************************
+
+*OpenGroup: PaperHandling/Paper Handling
+
+*%******************************************************************************
+*%	Paper Type
+*%******************************************************************************
+
+*OpenUI *MediaType/Paper Type: PickOne
+*DefaultMediaType: Plain
+*OrderDependency: 30 AnySetup *MediaType
+*MediaType PrinterS/Printer Setting:		""
+*MediaType Plain/Plain Paper:			"<< /MediaType (Plain Paper) /Policies << /MediaType 2 >> >> setpagedevice"
+*MediaType Card/Card Stock:				"<< /MediaType (Card Stock) /Policies << /MediaType 2 >> >> setpagedevice"
+*MediaType Transparency/Transparency:	"<< /MediaType (Transparency) /Policies << /MediaType 2 >> >> setpagedevice"
+*MediaType Labels/Labels:				"<< /MediaType (Labels) /Policies << /MediaType 2 >> >> setpagedevice"
+*MediaType Bond/Bond:					"<< /MediaType (Bond) /Policies << /MediaType 2 >> >> setpagedevice"
+*MediaType Envelope/Envelope:			"<< /MediaType (Envelope) /Policies << /MediaType 2 >> >> setpagedevice"
+*MediaType Letterhead/Letterhead:		"<< /MediaType (Letterhead) /Policies << /MediaType 2 >> >> setpagedevice"
+*MediaType Preprint/Preprinted:			"<< /MediaType (Preprinted) /Policies << /MediaType 2 >> >> setpagedevice"
+*MediaType Colored/Colored Paper:		"<< /MediaType (Color) /Policies << /MediaType 2 >> >> setpagedevice"
+*MediaType Custom1/Custom Type 1:		"<< /MediaType (Custom Type 1) /Policies << /MediaType 2 >> >> setpagedevice"
+*MediaType Custom2/Custom Type 2:		"<< /MediaType (Custom Type 2) /Policies << /MediaType 2 >> >> setpagedevice"
+*MediaType Custom3/Custom Type 3:		"<< /MediaType (Custom Type 3) /Policies << /MediaType 2 >> >> setpagedevice"
+*MediaType Custom4/Custom Type 4:		"<< /MediaType (Custom Type 4) /Policies << /MediaType 2 >> >> setpagedevice"
+*MediaType Custom5/Custom Type 5:		"<< /MediaType (Custom Type 5) /Policies << /MediaType 2 >> >> setpagedevice"
+*MediaType Custom6/Custom Type 6:		"<< /MediaType (Custom Type 6) /Policies << /MediaType 2 >> >> setpagedevice"
+*CloseUI: *MediaType
+
+*%******************************************************************************
+*%	Separator Pages
+*%******************************************************************************
+
+*OpenUI *SepPages/Separator Pages: PickOne
+*OrderDependency: 60 AnySetup *SepPages
+*DefaultSepPages: PrinterS
+*SepPages PrinterS/Printer Setting:	""
+*SepPages None/None:				"<< /SlipSheet 0 >> setpagedevice"
+*SepPages Jobs/Between Jobs:		"<< /SlipSheet 2 >> setpagedevice"
+*SepPages Copies/Between Copies:	"<< /SlipSheet 3 >> setpagedevice"
+*SepPages Pages/Between Pages:		"<< /SlipSheet 4 >> setpagedevice"
+*?SepPages:								"
+	gsave
+	currentpagedevice /SlipSheet get
+	dup dup
+	4 eq {(Pages)}{3 eq {(Copies)}{2 eq {(Jobs)}{(None)} ifelse} ifelse} ifelse
+	= flush
+	grestore"
+*End
+*CloseUI: *SepPages
+
+*%******************************************************************************
+*%	Separator Source
+*%******************************************************************************
+
+*OpenUI *SepSource/Separator Source: PickOne
+*OrderDependency: 65 AnySetup *SepSource
+*DefaultSepSource: PrinterS
+*SepSource PrinterS/Printer Setting:	""
+*SepSource Tray1/Tray 1:			"<< /SlipSheetDetails << /Type 96 /SlipSheetSource 0 >> >> setpagedevice"
+*SepSource Tray2/Tray 2:			"<< /SlipSheetDetails << /Type 96 /SlipSheetSource 1 >> >> setpagedevice"
+*?SepSource:						"
+	gsave
+	currentpagedevice /SlipSheetDetails get /SlipSheetSource get
+	dup dup
+    4 eq {(ManualFeeder)}
+        1 eq
+            {(Tray2)}{0 eq 
+                {(Tray1)}{(None)}
+            ifelse}
+        ifelse}
+    ifelse
+    = flush
+	grestore"
+*End
+*CloseUI: *SepSource
+
+*%******************************************************************************
+*%	Form Substitution
+*%******************************************************************************
+
+*OpenUI *FormSubstitution/Form Substitution:  PickOne
+*DefaultFormSubstitution:  PromptForm
+*FormSubstitution DefaultForm/Use printer default form:			"<< /Policies << /PageSize 1 >> >> setpagedevice"
+*FormSubstitution PromptForm/Prompt for form on operator panel:	"<< /Policies << /PageSize 2 >> >> setpagedevice"
+*FormSubstitution FitToNearest/Fit to nearest form size:		"<< /Policies << /PageSize 3 >> >> setpagedevice"
+*FormSubstitution FitNextLarger/Fit to next larger form size:	"<< /Policies << /PageSize 4 >> >> setpagedevice"
+*FormSubstitution UseNearest/Use nearest form size:				"<< /Policies << /PageSize 5 >> >> setpagedevice"
+*FormSubstitution UseNextLarger/Use next larger form size:		"<< /Policies << /PageSize 6 >> >> setpagedevice"
+*?FormSubstitution:		"
+	gsave
+	currentpagedevice /Policies get /PageSize get
+	dup dup dup dup dup
+	6 eq
+		{(UseNextLarger)}{5 eq
+			{(UseNearest)}{4 eq
+				{(FitNextLarger)}{3 eq
+					{(FitToNearest)}{2 eq
+						{(PromptForm)}{1 eq
+							{(DefaultForm)}{(PromptForm)}
+						ifelse}
+					ifelse}
+				ifelse}
+			ifelse}
+		ifelse}
+	ifelse
+	= flush
+	grestore"
+*End
+*CloseUI:  *FormSubstitution
+
+*CloseGroup: PaperHandling
+
+*%******************************************************************************
+*%	Collation
+*%******************************************************************************
+
+*OpenUI *Collate/Collation: Boolean
+*OrderDependency: 32 AnySetup *Collate
+*DefaultCollate: True
+*Collate False/Off: "<< /Collate false >> setpagedevice"
+*Collate True/On:   "<< /Collate true >> setpagedevice"
+*?Collate:			"
+	gsave
+	currentpagedevice /Collate get
+	{(True)}{(False)} ifelse
+	= flush
+	grestore"
+*End
+*CloseUI: *Collate
+
+*%******************************************************************************
+*%	Landscape Orientation
+*%******************************************************************************
+
+*LandscapeOrientation: Minus90
+
+*%******************************************************************************
+*%	Page Definitions
+*%******************************************************************************
+
+*%******************************************************************************
+*%	Page Size
+*%******************************************************************************
+
+*OpenUI *PageSize: PickOne
+*OrderDependency: 66 AnySetup *PageSize
+*DefaultPageSize:	Letter
+*PageSize A4/A4: 					"
+	<< /Policies << /PageSize 2 >> /PageSize [595 842] /ImagingBBox null >> setpagedevice"
+*End
+*PageSize A5/A5: 					"
+	<< /Policies << /PageSize 2 >> /PageSize [419 595] /ImagingBBox null >> setpagedevice"
+*End
+*PageSize B5/JIS B5: 					"
+	<< /Policies << /PageSize 2 >> /PageSize [516 729] /ImagingBBox null >> setpagedevice"
+*End
+*PageSize Letter/Letter: 			"
+	<< /Policies << /PageSize 2 >> /PageSize [612 792] /ImagingBBox null >> setpagedevice"
+*End
+*PageSize Legal/Legal: 				"
+	<< /Policies << /PageSize 2 >> /PageSize [612 1008] /ImagingBBox null >> setpagedevice"
+*End
+*PageSize Executive/Executive: 		"
+	<< /Policies << /PageSize 2 >> /PageSize [522 756] /ImagingBBox null >> setpagedevice"
+*End
+*PageSize Folio/Folio: 				"
+	<< /Policies << /PageSize 2 >> /PageSize [612 936] /ImagingBBox null >> setpagedevice"
+*End
+*PageSize Statement/Statement: 		"
+	<< /Policies << /PageSize 2 >> /PageSize [396 612] /ImagingBBox null >> setpagedevice"
+*End
+*PageSize Universal/Universal:		"
+	<< /Policies << /PageSize 2 >> /PageSize [612 1020] /ImagingBBox null >> setpagedevice"
+*End
+*PageSize Monarch/7 3/4 Envelope:   "
+	<< /Policies << /PageSize 2 >> /PageSize [279 540] /ImagingBBox null /ManualFeed true
+	/MediaType (Envelope) /Policies << /MediaType 2 >> 
+	/BeginPage { pop 279 540 translate 180 rotate } >> setpagedevice"
+*End
+*PageSize C4/9 Envelope:            "
+	<< /Policies << /PageSize 2 >> /PageSize [279 639] /ImagingBBox null /ManualFeed true
+	/MediaType (Envelope) /Policies << /MediaType 2 >> 
+	/BeginPage { pop 279 639 translate 180 rotate } >> setpagedevice"
+*End
+*PageSize Comm10/10 Envelope:       "
+	<< /Policies << /PageSize 2 >> /PageSize [297 684] /ImagingBBox null /ManualFeed true
+	/MediaType (Envelope) /Policies << /MediaType 2 >> 
+	/BeginPage { pop 297 684 translate 180 rotate } >> setpagedevice"
+*End
+*PageSize DL/DL Envelope:           "
+	<< /Policies << /PageSize 2 >> /PageSize [312 624] /ImagingBBox null /ManualFeed true
+	/MediaType (Envelope) /Policies << /MediaType 2 >> 
+	/BeginPage { pop 312 624 translate 180 rotate } >> setpagedevice"
+*End
+*PageSize C5/C5 Envelope:           "
+	<< /Policies << /PageSize 2 >> /PageSize [459 649] /ImagingBBox null /ManualFeed true
+	/MediaType (Envelope) /Policies << /MediaType 2 >> 
+	/BeginPage { pop 459 649 translate 180 rotate } >> setpagedevice"
+*End
+*PageSize ISOB5/B5 Envelope:        "
+	<< /Policies << /PageSize 2 >> /PageSize [499 708] /ImagingBBox null /ManualFeed true
+	/MediaType (Envelope) /Policies << /MediaType 2 >> 
+	/BeginPage { pop 499 708 translate 180 rotate } >> setpagedevice"
+*End
+*PageSize OthEnv/Other Envelope:    "
+	<< /Policies << /PageSize 2 >> /PageSize [612 996] /ImagingBBox null /ManualFeed true
+	/MediaType (Envelope) /Policies << /MediaType 2 >> 
+	/BeginPage { pop 612 996 translate 180 rotate } >> setpagedevice"
+*End
+*?PageSize: 						"
+	gsave
+	16 dict
+		dup /540 (Monarch) put
+		dup /595 (A5) put
+		dup /612 (Statement) put
+		dup /624 (DL) put
+		dup /639 (C4) put
+		dup /649 (C5) put
+		dup /684 (Comm10) put
+		dup /708 (ISOB5) put
+		dup /729 (B5) put
+		dup /756 (Executive) put
+		dup /792 (Letter) put
+		dup /842 (A4) put
+	 	dup /936 (Folio) put
+		dup /996 (OthEnv) put
+		dup /1008 (Legal) put
+		dup /1020 (Universal) put
+	currentpagedevice /PageSize get 1 get
+	5 string cvs cvn get
+	= flush
+	grestore"
+*End 
+*CloseUI: *PageSize
+
+*%******************************************************************************
+*%	Page Region
+*%******************************************************************************
+
+*OpenUI *PageRegion: PickOne
+*OrderDependency: 67 AnySetup *PageRegion
+*DefaultPageRegion:	Letter
+*PageRegion A4/A4:						"
+	<< /Policies << /PageSize 2 >> /PageSize [595 842] /ImagingBBox null >> setpagedevice"
+*End
+*PageRegion A5/A5:						"
+	<< /Policies << /PageSize 2 >> /PageSize [419 595] /ImagingBBox null >> setpagedevice"
+*End
+*PageRegion B5/JIS B5:						"
+	<< /Policies << /PageSize 2 >> /PageSize [516 729] /ImagingBBox null >> setpagedevice"
+*End
+*PageRegion Letter/Letter:				"
+	<< /Policies << /PageSize 2 >> /PageSize [612 792] /ImagingBBox null >> setpagedevice"
+*End
+*PageRegion Legal/Legal:				"
+	<< /Policies << /PageSize 2 >> /PageSize [612 1008] /ImagingBBox null >> setpagedevice"
+*End
+*PageRegion Executive/Executive:		"
+	<< /Policies << /PageSize 2 >> /PageSize [522 756] /ImagingBBox null >> setpagedevice"
+*End
+*PageRegion Folio/Folio:				"
+	<< /Policies << /PageSize 2 >> /PageSize [612 936] /ImagingBBox null >> setpagedevice"
+*End
+*PageRegion Statement/Statement:		"
+	<< /Policies << /PageSize 2 >> /PageSize [396 612] /ImagingBBox null >> setpagedevice"
+*End
+*PageRegion Universal/Universal:		"
+	<< /Policies << /PageSize 2 >> /PageSize [612 1020] /ImagingBBox null >> setpagedevice"
+*End
+*PageRegion Monarch/7 3/4 Envelope:		"
+	<< /Policies << /PageSize 2 >> /PageSize [279 540] /ImagingBBox null /ManualFeed true
+	/MediaType (Envelope) /Policies << /MediaType 2 >> 
+	/BeginPage { pop 279 540 translate 180 rotate } >> setpagedevice"
+*End
+*PageRegion C4/9 Envelope:				"
+	<< /Policies << /PageSize 2 >> /PageSize [279 639] /ImagingBBox null /ManualFeed true
+	/MediaType (Envelope) /Policies << /MediaType 2 >> 
+	/BeginPage { pop 279 639 translate 180 rotate } >> setpagedevice"
+*End
+*PageRegion Comm10/10 Envelope:			"
+	<< /Policies << /PageSize 2 >> /PageSize [297 684] /ImagingBBox null /ManualFeed true
+	/MediaType (Envelope) /Policies << /MediaType 2 >> 
+	/BeginPage { pop 297 684 translate 180 rotate } >> setpagedevice"
+*End
+*PageRegion DL/DL Envelope:				"
+	<< /Policies << /PageSize 2 >> /PageSize [312 624] /ImagingBBox null /ManualFeed true
+	/MediaType (Envelope) /Policies << /MediaType 2 >> 
+	/BeginPage { pop 312 624 translate 180 rotate } >> setpagedevice"
+*End
+*PageRegion C5/C5 Envelope:				"
+	<< /Policies << /PageSize 2 >> /PageSize [459 649] /ImagingBBox null /ManualFeed true
+	/MediaType (Envelope) /Policies << /MediaType 2 >> 
+	/BeginPage { pop 459 649 translate 180 rotate } >> setpagedevice"
+*End
+*PageRegion ISOB5/B5 Envelope:			"
+	<< /Policies << /PageSize 2 >> /PageSize [499 708] /ImagingBBox null /ManualFeed true
+	/MediaType (Envelope) /Policies << /MediaType 2 >> 
+	/BeginPage { pop 499 708 translate 180 rotate } >> setpagedevice"
+*End
+*PageRegion OthEnv/Other Envelope:		"
+	<< /Policies << /PageSize 2 >> /PageSize [612 996] /ImagingBBox null /ManualFeed true
+	/MediaType (Envelope) /Policies << /MediaType 2 >> 
+	/BeginPage { pop 612 996 translate 180 rotate } >> setpagedevice"
+*End
+*?PageRegion:							"
+	gsave
+	16 dict
+		dup /540 (Monarch) put
+		dup /595 (A5) put
+		dup /612 (Statement) put
+		dup /624 (DL) put
+		dup /639 (C4) put
+		dup /649 (C5) put
+		dup /684 (Comm10) put
+		dup /708 (ISOB5) put
+		dup /729 (B5) put
+		dup /756 (Executive) put
+		dup /792 (Letter) put
+		dup /842 (A4) put
+	 	dup /936 (Folio) put
+		dup /996 (OthEnv) put
+		dup /1008 (Legal) put
+		dup /1020 (Universal) put
+	currentpagedevice /PageSize get 1 get
+	5 string cvs cvn get
+	= flush
+	grestore"*End 
+*CloseUI: *PageRegion
+
+*%******************************************************************************
+*%	Imageable Area
+*%******************************************************************************
+
+*DefaultImageableArea:	Letter
+*ImageableArea A4/A4:          			"10 12 585 830"
+*ImageableArea A5/A5:          			"12 12 407 583"
+*ImageableArea B5/JIS B5:          		"12 12 504 716"
+*ImageableArea Letter/Letter:      		"12 12 600 780"
+*ImageableArea Legal/Legal:       		"12 12 600 996"
+*ImageableArea Executive/Executive:   	"12 12 510 744"
+*ImageableArea Folio/Folio:				"12 12 600 924"
+*ImageableArea Statement/Statement:		"12 12 384 600"
+*ImageableArea Universal/Universal:		"12 12 600 1008"
+*ImageableArea Monarch/7 3/4 Envelope:  "12 12 267 528"
+*ImageableArea C4/9 Envelope:          	"12 12 267 627"
+*ImageableArea Comm10/10 Envelope:      "12 12 285 672"
+*ImageableArea DL/DL Envelope:          "12 12 300 612"
+*ImageableArea C5/C5 Envelope:          "12 12 447 637"
+*ImageableArea ISOB5/B5 Envelope:       "12 12 487 696"
+*ImageableArea OthEnv/Other Envelope:   "12 12 600 984"
+
+
+*%******************************************************************************
+*%	Paper Dimensions
+*%******************************************************************************
+
+*DefaultPaperDimension:	Letter
+*PaperDimension A4:				"595 842"
+*PaperDimension A5:				"419 595"
+*PaperDimension B5:				"516 729"
+*PaperDimension Letter:			"612 792"
+*PaperDimension Legal:			"612 1008"
+*PaperDimension Executive:		"522 756"
+*PaperDimension Folio:			"612 936"
+*PaperDimension Statement:		"396 612"
+*PaperDimension Universal:		"612 1020"
+*PaperDimension Monarch:		"279 540"
+*PaperDimension C4:				"279 639"
+*PaperDimension Comm10:			"297 684"
+*PaperDimension DL:				"312 624"
+*PaperDimension C5:				"459 649"
+*PaperDimension ISOB5:			"499 708"
+*PaperDimension OthEnv:			"612 996"
+
+*%******************************************************************************
+*%	Input/Paper Sources
+*%******************************************************************************
+
+*RequiresPageRegion All: True
+*OpenUI *InputSlot:  PickOne
+*OrderDependency: 45 AnySetup *InputSlot
+*DefaultInputSlot: Tray1
+*InputSlot Tray1/Tray 1:	"
+	1 dict dup /MediaPosition null put setpagedevice 
+	1 dict dup /InputAttributes 1 dict dup /Priority [0] put put setpagedevice
+	1 dict dup /Policies 1 dict dup /PageSize 2 put put setpagedevice
+ 	<< /ManualFeed false >> setpagedevice"
+*End
+*InputSlot Tray2/Tray 2:	"
+	1 dict dup /MediaPosition null put setpagedevice 
+	1 dict dup /InputAttributes 1 dict dup /Priority [1] put put setpagedevice
+	1 dict dup /Policies 1 dict dup /PageSize 2 put put setpagedevice
+	<< /ManualFeed false >> setpagedevice"
+*End
+*InputSlot ManualPaper/Manual Paper:	"
+	1 dict dup /MediaPosition null put setpagedevice 
+	1 dict dup /ManualFeed true  put setpagedevice
+	1 dict dup /Policies 1 dict dup /PageSize 2 put put setpagedevice"
+*End
+*InputSlot ManualEnv/Manual Envelope:	"
+	1 dict dup /MediaPosition null put setpagedevice 
+	1 dict dup /ManualFeed true  put setpagedevice
+	1 dict dup /Policies 1 dict dup /PageSize 2 put put setpagedevice
+	<< /MediaType (Envelope) /Policies << /MediaType 2 >> >> setpagedevice"
+*End
+*?InputSlot: "
+	save
+	[ (Tray1) (Tray2) (ManualPaper) (ManualEnv) ] 
+	statusdict /papertray get exec {get exec} stopped { pop pop (Unknown) } 
+	if = flush
+	restore"
+*End
+*CloseUI: *InputSlot
+
+*DefaultOutputOrder:	Normal
+
+*%******************************************************************************
+*%	CustomPageSize
+*%******************************************************************************
+
+*CustomPageSize True:  "
+	pop pop pop
+	statusdict begin
+        2 copy
+        0 () setuniversalsize
+    end
+	<< /PageSize [5 -2 roll]
+   		/ImagingBBox null
+   		/Policies <</PageSize 2>>
+	>> setpagedevice"
+*End
+*MaxMediaWidth:						"649"
+*MaxMediaHeight:					"1020"
+*HWMargins:							12 12 12 12
+*ParamCustomPageSize Width:			1 points 216 612
+*ParamCustomPageSize Height:		2 points 216 1020
+*ParamCustomPageSize WidthOffset:	3 points 0 0
+*ParamCustomPageSize HeightOffset:	4 points 0 0
+*ParamCustomPageSize Orientation:	5 int 0 1
+
+*DefaultLeadingEdge:	Short
+*LeadingEdge Short:		""
+*LeadingEdge Long:		""
+
+*%******************************************************************************
+*%	Fonts
+*%******************************************************************************
+
+*DefaultFont: Courier
+*Font AlbertusMT:					Standard "(001.000)" Standard ROM
+*Font AlbertusMT-Italic:			Standard "(001.000)" Standard ROM
+*Font AlbertusMT-Light:				Standard "(001.000)" Standard ROM
+*Font AntiqueOlive-Roman:			Standard "(001.000)" Standard ROM
+*Font AntiqueOlive-Italic:			Standard "(001.000)" Standard ROM
+*Font AntiqueOlive-Bold:			Standard "(001.000)" Standard ROM
+*Font AntiqueOlive-Compact:			Standard "(001.000)" Standard ROM
+*Font ArialMT:						Standard "(001.000)" Standard ROM
+*Font Arial-ItalicMT:				Standard "(001.000)" Standard ROM
+*Font Arial-BoldMT:					Standard "(001.000)" Standard ROM
+*Font Arial-BoldItalicMT:			Standard "(001.000)" Standard ROM
+*Font AvantGarde-Book:				Standard "(001.000)" Standard ROM
+*Font AvantGarde-BookOblique:		Standard "(001.000)" Standard ROM
+*Font AvantGarde-Demi:				Standard "(001.000)" Standard ROM
+*Font AvantGarde-DemiOblique:		Standard "(001.000)" Standard ROM
+*Font Bookman-Light:				Standard "(001.000)" Standard ROM
+*Font Bookman-LightItalic:			Standard "(001.000)" Standard ROM
+*Font Bookman-Demi:					Standard "(001.000)" Standard ROM
+*Font Bookman-DemiItalic:			Standard "(001.000)" Standard ROM
+*Font Coronet-Regular:				Standard "(001.000)" Standard ROM
+*Font Courier:						Standard "(001.000)" Standard ROM
+*Font Courier-Oblique:				Standard "(001.000)" Standard ROM
+*Font Courier-Bold:					Standard "(001.000)" Standard ROM
+*Font Courier-BoldOblique:			Standard "(001.000)" Standard ROM
+*Font Garamond-Antiqua:				Standard "(001.000)" Standard ROM
+*Font Garamond-Kursiv:				Standard "(001.000)" Standard ROM
+*Font Garamond-Halbfett:			Standard "(001.000)" Standard ROM
+*Font Garamond-KursivHalbfett:		Standard "(001.000)" Standard ROM
+*Font GoldSansMM:					Standard "(001.000)" Standard ROM
+*Font GoldSerifMM:					Standard "(001.000)" Standard ROM
+*Font Helvetica:					Standard "(001.000)" Standard ROM
+*Font Helvetica-Oblique:			Standard "(001.000)" Standard ROM
+*Font Helvetica-Bold:				Standard "(001.000)" Standard ROM
+*Font Helvetica-BoldOblique:		Standard "(001.000)" Standard ROM
+*Font Helvetica-Light:				Standard "(001.000)" Standard ROM
+*Font Helvetica-LightOblique:		Standard "(001.000)" Standard ROM
+*Font Helvetica-Black:				Standard "(001.000)" Standard ROM
+*Font Helvetica-BlackOblique:		Standard "(001.000)" Standard ROM
+*Font Helvetica-Narrow:				Standard "(001.000)" Standard ROM
+*Font Helvetica-Narrow-Oblique:		Standard "(001.000)" Standard ROM
+*Font Helvetica-Narrow-Bold:		Standard "(001.000)" Standard ROM
+*Font Helvetica-Narrow-BoldOblique:	Standard "(001.000)" Standard ROM
+*Font Intl-CG-Times:				Standard "(001.000)" Standard ROM
+*Font Intl-CG-Times-Italic:			Standard "(001.000)" Standard ROM
+*Font Intl-CG-Times-Bold:			Standard "(001.000)" Standard ROM
+*Font Intl-CG-Times-BoldItalic:		Standard "(001.000)" Standard ROM
+*Font Intl-Courier:					Standard "(001.000)" Standard ROM
+*Font Intl-Courier-Oblique:			Standard "(001.000)" Standard ROM
+*Font Intl-Courier-Bold:			Standard "(001.000)" Standard ROM
+*Font Intl-Courier-BoldOblique:		Standard "(001.000)" Standard ROM
+*Font Intl-Univers-Medium:			Standard "(001.000)" Standard ROM
+*Font Intl-Univers-MediumItalic:	Standard "(001.000)" Standard ROM
+*Font Intl-Univers-Bold:			Standard "(001.000)" Standard ROM
+*Font Intl-Univers-BoldItalic:		Standard "(001.000)" Standard ROM
+*Font LetterGothic:					Standard "(001.000)" Standard ROM
+*Font LetterGothic-Slanted:			Standard "(001.000)" Standard ROM
+*Font LetterGothic-Bold:			Standard "(001.000)" Standard ROM
+*Font LetterGothic-BoldSlanted:		Standard "(001.000)" Standard ROM
+*Font Marigold:						Standard "(001.000)" Standard ROM
+*Font NewCenturySchlbk-Roman:		Standard "(001.000)" Standard ROM
+*Font NewCenturySchlbk-Italic:		Standard "(001.000)" Standard ROM
+*Font NewCenturySchlbk-Bold:		Standard "(001.000)" Standard ROM
+*Font NewCenturySchlbk-BoldItalic:	Standard "(001.000)" Standard ROM
+*Font Optima:						Standard "(001.000)" Standard ROM
+*Font Optima-Italic:				Standard "(001.000)" Standard ROM
+*Font Optima-Bold:					Standard "(001.000)" Standard ROM
+*Font Optima-BoldItalic:			Standard "(001.000)" Standard ROM
+*Font Palatino-Roman:				Standard "(001.000)" Standard ROM
+*Font Palatino-Italic:				Standard "(001.000)" Standard ROM
+*Font Palatino-Bold:				Standard "(001.000)" Standard ROM
+*Font Palatino-BoldItalic:			Standard "(001.000)" Standard ROM
+*Font Symbol:						Special  "(001.000)" Special  ROM
+*Font Times-Roman:					Standard "(001.000)" Standard ROM
+*Font Times-Italic:					Standard "(001.000)" Standard ROM
+*Font Times-Bold:					Standard "(001.000)" Standard ROM
+*Font Times-BoldItalic:				Standard "(001.000)" Standard ROM
+*Font TimesNewRomanPSMT:			Standard "(001.000)" Standard ROM
+*Font TimesNewRomanPS-ItalicMT:		Standard "(001.000)" Standard ROM
+*Font TimesNewRomanPS-BoldMT:		Standard "(001.000)" Standard ROM
+*Font TimesNewRomanPS-BoldItalicMT:	Standard "(001.000)" Standard ROM
+*Font Univers:						Standard "(001.000)" Standard ROM
+*Font Univers-Oblique:				Standard "(001.000)" Standard ROM
+*Font Univers-Bold:					Standard "(001.000)" Standard ROM
+*Font Univers-BoldOblique:			Standard "(001.000)" Standard ROM
+*Font Univers-Condensed:			Standard "(001.000)" Standard ROM
+*Font Univers-CondensedOblique:		Standard "(001.000)" Standard ROM
+*Font Univers-CondensedBold:		Standard "(001.000)" Standard ROM
+*Font Univers-CondensedBoldOblique:	Standard "(001.000)" Standard ROM
+*Font Wingdings-Regular:			Special  "(001.000)" Special  ROM
+*Font ZapfChancery-MediumItalic:	Standard "(001.000)" Standard ROM
+*Font ZapfDingbats:					Special  "(001.000)" Special  ROM
+*?FontQuery: "
+ save
+ 4 dict begin
+  /sv exch def
+  /str (fonts/                              ) def
+  /st2 128 string def
+  { count 0 gt
+   { dup st2 cvs (/) print print (:) print dup FontDirectory exch known
+    {pop (Yes)}
+    { str exch st2 cvs dup length /len exch def
+     6 exch putinterval str 0 len 6 add getinterval mark exch
+     { } st2 filenameforall counttomark 0 gt
+     { cleartomark (Yes)}{cleartomark (No)}ifelse
+    }ifelse = flush
+   }{ exit } ifelse
+  } bind loop
+  (*) = flush
+  sv
+ end
+ restore
+ "
+*End
+
+*?FontList: "
+ save
+ 2 dict begin
+  /sv exch def
+  /str 128 string def
+  FontDirectory { pop == } bind forall flush
+  /filenameforall where
+  { pop save (fonts/*)
+   { dup length 6 sub 6 exch getinterval cvn == } bind
+   str filenameforall flush restore
+  } if
+  (*) = flush
+  sv
+ end
+ restore
+ "
+*End
+
+*%******************************************************************************
+*%	Printer Messages
+*%******************************************************************************
+
+*Message: "%%  exitserver: permanent state may be changed  %%"
+*Message: "%%  Flushing: rest of job (to end-of-file) will be ignored  %%"
+*Message: "\FontName\ not found, using Courier"
+
+*%	Status (format: %%  status: <one of these> %% )
+*Status: "Printer Busy"
+*Status: "Warming Up"
+*Status: "idle"
+*Status: "busy"
+*Status: "waiting"
+*Status: "initializing"
+*Status: "not ready"
+
+*%	Input Sources (format: %%  status: <stat>; source: <one of these>  %% )
+*Source: "Serial"
+*Source: "Parallel"
+*Source: "Network"
+
+*%	Printer Error (format: %%  PrinterError: <one of these>  %%)
+*PrinterError: "Paper Jam"
+*PrinterError: "Wrong Paper Length"
+*PrinterError: "Invalid Manual Insertion"
+*PrinterError: "Change Size in Feeder"
+*PrinterError: "Change Size in Tray 1"
+*PrinterError: "Change Size in Tray 2"
+*PrinterError: "Change Size in Tray"
+*PrinterError: "Paper Out or Feed Failure - Feeder"
+*PrinterError: "Load Manual Envelope"
+*PrinterError: "Paper Out or Feed Failure - Tray 1"
+*PrinterError: "Paper Out or Feed Failure - Tray 2"
+*PrinterError: "Paper Out or Feed Failure"
+*PrinterError: "Load Manual Paper"
+*PrinterError: "Output Bin Full"
+*PrinterError: "Cover Open/Cartridge Not Installed"
+*PrinterError: "Complex Page"
+*PrinterError: "Default Storage Error"
+*PrinterError: "Defective Font Card Installed"
+*PrinterError: "Flash Full"
+*PrinterError: "ioerror"
+*PrinterError: "Flash Error"
+*PrinterError: "Duplex Not Attached"
+*PrinterError: "Duplex Cover Open"
+*PrinterError: "Scheduled Maintenance"
+*PrinterError: "Toner Low"
+*PrinterError: "Service Error"
+*PrinterError: "Not Ready"
+
+*%******************************************************************************
+*%	Color Separation Information
+*%******************************************************************************
+
+*DefaultColorSep: ProcessBlack.85lpi.600dpi/85 lpi / 600 dpi
+
+*InkName: ProcessBlack/Process Black
+*InkName: CustomColor/Custom Color
+*InkName: ProcessCyan/Process Cyan
+*InkName: ProcessMagenta/Process Magenta
+*InkName: ProcessYellow/Process Yellow
+
+*%  For 60 lpi / 300 dpi  ===============================
+
+*ColorSepScreenAngle ProcessBlack.60lpi.300dpi/60 lpi / 300 dpi: "45"
+*ColorSepScreenAngle CustomColor.60lpi.300dpi/60 lpi / 300 dpi: "45"
+*ColorSepScreenAngle ProcessCyan.60lpi.300dpi/60 lpi / 300 dpi: "15"
+*ColorSepScreenAngle ProcessMagenta.60lpi.300dpi/60 lpi / 300 dpi: "75"
+*ColorSepScreenAngle ProcessYellow.60lpi.300dpi/60 lpi / 300 dpi: "0"
+
+*ColorSepScreenFreq ProcessBlack.60lpi.300dpi/60 lpi / 300 dpi: "60"
+*ColorSepScreenFreq CustomColor.60lpi.300dpi/60 lpi / 300 dpi: "60"
+*ColorSepScreenFreq ProcessCyan.60lpi.300dpi/60 lpi / 300 dpi: "60"
+*ColorSepScreenFreq ProcessMagenta.60lpi.300dpi/60 lpi / 300 dpi: "60"
+*ColorSepScreenFreq ProcessYellow.60lpi.300dpi/60 lpi / 300 dpi: "60"
+
+*%  For 53 lpi / 300 dpi  ===============================
+
+*ColorSepScreenAngle ProcessBlack.53lpi.300dpi/53 lpi / 300 dpi: "45.0"
+*ColorSepScreenAngle CustomColor.53lpi.300dpi/53 lpi / 300 dpi: "45.0"
+*ColorSepScreenAngle ProcessCyan.53lpi.300dpi/53 lpi / 300 dpi: "71.5651"
+*ColorSepScreenAngle ProcessMagenta.53lpi.300dpi/53 lpi / 300 dpi: "18.4349"
+*ColorSepScreenAngle ProcessYellow.53lpi.300dpi/53 lpi / 300 dpi: "0.0"
+
+*ColorSepScreenFreq ProcessBlack.53lpi.300dpi/53 lpi / 300 dpi: "53.033"
+*ColorSepScreenFreq CustomColor.53lpi.300dpi/53 lpi / 300 dpi: "53.033"
+*ColorSepScreenFreq ProcessCyan.53lpi.300dpi/53 lpi / 300 dpi: "47.4342"
+*ColorSepScreenFreq ProcessMagenta.53lpi.300dpi/53 lpi / 300 dpi: "47.4342"
+*ColorSepScreenFreq ProcessYellow.53lpi.300dpi/53 lpi / 300 dpi: "50.0"
+
+*%  For 85 lpi / 600 dpi  5,5,2,6,6,2,20/3,0) =====================
+
+*ColorSepScreenAngle ProcessBlack.85lpi.600dpi/85 lpi / 600 dpi: "45.0"
+*ColorSepScreenAngle CustomColor.85lpi.600dpi/85 lpi / 600 dpi: "45.0"
+*ColorSepScreenAngle ProcessCyan.85lpi.600dpi/85 lpi / 600 dpi: "71.5651"
+*ColorSepScreenAngle ProcessMagenta.85lpi.600dpi/85 lpi / 600 dpi: "18.4349"
+*ColorSepScreenAngle ProcessYellow.85lpi.600dpi/85 lpi / 600 dpi: "0.0"
+
+*ColorSepScreenFreq ProcessBlack.85lpi.600dpi/85 lpi / 600 dpi: "84.8528"
+*ColorSepScreenFreq CustomColor.85lpi.600dpi/85 lpi / 600 dpi: "84.8528"
+*ColorSepScreenFreq ProcessCyan.85lpi.600dpi/85 lpi / 600 dpi: "94.8683"
+*ColorSepScreenFreq ProcessMagenta.85lpi.600dpi/85 lpi / 600 dpi: "94.8683"
+*ColorSepScreenFreq ProcessYellow.85lpi.600dpi/85 lpi / 600 dpi: "30.0"
+
+*ColorSepScreenProc ProcessYellow.85lpi.600dpi/85 lpi / 600 dpi: "
+ {1 add 2 div 3 mul dup floor sub 2 mul 1 sub exch
+ 1 add 2 div 3 mul dup floor sub 2 mul 1 sub exch
+ abs exch abs 2 copy add 1 gt {1 sub dup mul exch 1 sub dup mul add 1
+ sub }{dup mul exch dup mul add 1 exch sub }ifelse }
+ "
+*End
+
+*%  For 71 lpi / 600 dpi  ===============================
+
+*ColorSepScreenAngle ProcessBlack.71lpi.600dpi/71 lpi / 600 dpi: "45.0"
+*ColorSepScreenAngle CustomColor.71lpi.600dpi/71 lpi / 600 dpi: "45.0"
+*ColorSepScreenAngle ProcessCyan.71lpi.600dpi/71 lpi / 600 dpi: "71.5651"
+*ColorSepScreenAngle ProcessMagenta.71lpi.600dpi/71 lpi / 600 dpi: "18.4349"
+*ColorSepScreenAngle ProcessYellow.71lpi.600dpi/71 lpi / 600 dpi: "0.0"
+
+*ColorSepScreenFreq ProcessBlack.71lpi.600dpi/71 lpi / 600 dpi: "70.7107"
+*ColorSepScreenFreq CustomColor.71lpi.600dpi/71 lpi / 600 dpi: "70.7107"
+*ColorSepScreenFreq ProcessCyan.71lpi.600dpi/71 lpi / 600 dpi: "63.2456"
+*ColorSepScreenFreq ProcessMagenta.71lpi.600dpi/71 lpi / 600 dpi: "63.2456"
+*ColorSepScreenFreq ProcessYellow.71lpi.600dpi/71 lpi / 600 dpi: "66.6667"
+
+*% For 106 lpi / 1200 dpi ===================================================
+
+*ColorSepScreenAngle ProcessBlack.106lpi.1200dpi/106 lpi / 1200 dpi: "45.0"
+*ColorSepScreenAngle CustomColor.106lpi.1200dpi/106 lpi / 1200 dpi: "45.0"
+*ColorSepScreenAngle ProcessCyan.106lpi.1200dpi/106 lpi / 1200 dpi: "71.5651"
+*ColorSepScreenAngle ProcessMagenta.106lpi.1200dpi/106 lpi / 1200 dpi: "18.4349"
+*ColorSepScreenAngle ProcessYellow.106lpi.1200dpi/106 lpi / 1200 dpi: "0.0"
+
+*ColorSepScreenFreq ProcessBlack.106lpi.1200dpi/106 lpi / 1200 dpi: "106.066"
+*ColorSepScreenFreq CustomColor.106lpi.1200dpi/106 lpi / 1200 dpi: "106.066"
+*ColorSepScreenFreq ProcessCyan.106lpi.1200dpi/106 lpi / 1200 dpi: "94.8683"
+*ColorSepScreenFreq ProcessMagenta.106lpi.1200dpi/106 lpi / 1200 dpi: "94.8683"
+*ColorSepScreenFreq ProcessYellow.106lpi.1200dpi/106 lpi / 1200 dpi: "100.0"
+
+*% For 116 lpi / 1200 dpi ===================================================
+
+*ColorSepScreenAngle ProcessBlack.116lpi.1200dpi/116 lpi / 1200 dpi: "45.0"
+*ColorSepScreenAngle CustomColor.116lpi.1200dpi/116 lpi / 1200 dpi: "45.0"
+*ColorSepScreenAngle ProcessCyan.116lpi.1200dpi/116 lpi / 1200 dpi: "71.5651"
+*ColorSepScreenAngle ProcessMagenta.116lpi.1200dpi/116 lpi / 1200 dpi: "18.4349"
+*ColorSepScreenAngle ProcessYellow.116lpi.1200dpi/116 lpi / 1200 dpi: "0.0"
+
+*ColorSepScreenFreq ProcessBlack.116lpi.1200dpi/116 lpi / 1200 dpi: "106.066"
+*ColorSepScreenFreq CustomColor.116lpi.1200dpi/116 lpi / 1200 dpi: "106.066"
+*ColorSepScreenFreq ProcessCyan.116lpi.1200dpi/116 lpi / 1200 dpi: "94.8683"
+*ColorSepScreenFreq ProcessMagenta.116lpi.1200dpi/116 lpi / 1200 dpi: "94.8683"
+*ColorSepScreenFreq ProcessYellow.116lpi.1200dpi/116 lpi / 1200 dpi: "100.0"
+
+*%******************************************************************************
+*%	End of PPD
+*%******************************************************************************
