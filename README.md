@@ -8,10 +8,10 @@ Provided by extracting the ppd file from the Mac OS X driver and making some min
 1. Connect printer
 2. clone repository or download the `IBM-Infoprint-1412.ppd` file
 3. cd into directory where you saved the ppd file
-4. Get destination of printer by issuing `lpinfo -v` as root (Should be something like `usb://IBM%20Corp./IBM%20Infoprint%201412?serial=XXXXXX` or `ipp://IBM%20Corp./IBM%20Infoprint%201412?serial=XXXXXXX`)
-5. Add the printer to CUPS (you may need root depending on how your CUPS is configured):
+4. Get destination of printer by issuing `sudo lpinfo -v` (Should be something like `usb://IBM%20Corp./IBM%20Infoprint%201412?serial=XXXXXX` or `socket://192.168.X.X`)
+5. Add the printer to CUPS:
 ```bash
-lpadmin -p IBM-Infoprint-1412 -E -v <printer destination given by lpinfo> -P IBM-Infoprint-1412.ppd
+sudo lpadmin -p IBM-Infoprint-1412 -E -v <printer destination given by lpinfo> -P IBM-Infoprint-1412.ppd
 ```
 
 ## Copyright
